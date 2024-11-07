@@ -1,0 +1,13 @@
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-JWT-Extended
+Flask-Marshmallow
+Flask-RESTx
+python-dotenv
+marshmallow
+marshmallow-sqlalchemy
+WTForms
+alembic
+sqlalchemy
+Werkzeug
