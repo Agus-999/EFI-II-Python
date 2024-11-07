@@ -15,6 +15,7 @@ La configuración de la aplicación se maneja mediante variables de entorno:
 SQLALCHEMY_DATABASE_URI: URI de la base de datos, obtenida de un archivo .env.
 SECRET_KEY: Clave secreta para la autenticación.
 Instalación
+
 Clonar el repositorio:
 bash
 Copiar código
