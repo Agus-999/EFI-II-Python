@@ -1,0 +1,38 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    Vehículos de la marca {{ marca.nombre }}
+{% endblock %}
+
+{% block content %}
+    <h1>Vehículos de la marca {{ marca.nombre }}</h1>
+
+    {% if vehiculos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehiculo in vehiculos %}
+                    <tr>
+                        <td>{{ vehiculo.modelo }}</td>
+                        <td>{{ vehiculo.anio }}</td>
+                        <td>{{ vehiculo.precio }}</td>
+                        <td>
+                            <a href="{{ url_for('vehiculo_detalle', vehiculo_id=vehiculo.id) }}">Ver detalles</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay vehículos disponibles para esta marca.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('marca_list') }}">Volver a la lista de marcas</a>
+{% endblock %}

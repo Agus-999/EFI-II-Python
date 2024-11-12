@@ -1,0 +1,38 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    Lista de Tipos de Vehículos
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de Tipos de Vehículos</h1>
+
+    {% if tipos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre del Tipo</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tipo in tipos %}
+                    <tr>
+                        <td>{{ tipo.nombre }}</td>
+                        <td>{{ tipo.descripcion }}</td>
+                        <td>
+                            <a href="{{ url_for('tipo_detalle', tipo_id=tipo.id) }}">Ver detalles</a>
+                            <a href="{{ url_for('tipo_editar', tipo_id=tipo.id) }}">Editar</a>
+                            <a href="{{ url_for('tipo_eliminar', tipo_id=tipo.id) }}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay tipos de vehículos disponibles.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('tipo_crear') }}">Agregar nuevo tipo</a>
+{% endblock %}

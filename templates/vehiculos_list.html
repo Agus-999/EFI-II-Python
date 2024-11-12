@@ -1,0 +1,38 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    Lista de Vehículos
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de Vehículos</h1>
+
+    {% if vehiculos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehiculo in vehiculos %}
+                    <tr>
+                        <td>{{ vehiculo.marca.nombre }}</td>
+                        <td>{{ vehiculo.modelo }}</td>
+                        <td>{{ vehiculo.anio }}</td>
+                        <td>{{ vehiculo.precio }}</td>
+                        <td>
+                            <a href="{{ url_for('vehiculo_detalle', vehiculo_id=vehiculo.id) }}">Ver detalles</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay vehículos disponibles.</p>
+    {% endif %}
+{% endblock %}
