@@ -100,3 +100,38 @@ def vehiculos():
 
     vehiculos = Vehiculo.query.all()
     return VehiculosSchemas().dump(vehiculos, many=True)
+
+
+@vehiculo_db.route('/vehiculos/<int:id>', methods=['PUT', 'DELETE'])
+@jwt_required()
+def gestionar_vehiculo(id):
+    additional_data = get_jwt()
+    administrador = additional_data.get("administrador")
+
+    # Verificar que el usuario sea administrador
+    if not administrador:
+        return jsonify({"Mensaje": "Solo el admin puede modificar o eliminar vehiculos"})
+
+    vehiculo = Vehiculo.query.get(id)
+    if not vehiculo:
+        return jsonify({"Mensaje": "Vehículo no encontrado"}), 404
+
+    if request.method == 'PUT':
+        # Actualización de un vehículo
+        data = request.get_json()
+        vehiculo.modelo = data.get('modelo', vehiculo.modelo)
+        vehiculo.anio_fabricacion = data.get('anio_fabricacion', vehiculo.anio_fabricacion)
+        vehiculo.precio = data.get('precio', vehiculo.precio)
+        vehiculo.marca_id = data.get('marca_id', vehiculo.marca_id)
+        vehiculo.tipo_id = data.get('tipo_id', vehiculo.tipo_id)
+
+        db.session.commit()
+
+        return jsonify(VehiculosSchemas().dump(vehiculo))
+
+    elif request.method == 'DELETE':
+        # Eliminación de un vehículo
+        db.session.delete(vehiculo)
+        db.session.commit()
+
+        return jsonify({"Mensaje": "Vehículo eliminado exitosamente"})
